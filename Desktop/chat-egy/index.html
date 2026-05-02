@@ -1,153 +1,52 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>شات إيجي | البوابة الإخبارية التفاعلية</title>
-  <meta name="description" content="شات إيجي - منصة المحتوى العربي الذكية، أحدث الموضوعات وأسرع الملخصات مع ميزات تفاعلية حصرية.">
-  <meta name="theme-color" content="#2a004f">
-  <link rel="manifest" href="/manifest.json">
-  <link rel="icon" href="/icons/icon-192.png" sizes="192x192">
-  <link rel="apple-touch-icon" href="/icons/icon-192.png">
-  <link rel="stylesheet" href="/css/portal.css">
-  <style>
-    .home-loader {
-      color: var(--brand);
-      font-weight: bold;
-      padding: 20px;
-      text-align: center;
-      grid-column: 1 / -1;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شات إيجي - منصة النشر التفاعلية المفتوحة</title>
+    <meta name="description" content="شارك أفكارك ومقالاتك بحرية على شات إيجي بدون تعقيدات التسجيل. مجتمع مفتوح للنقاش الهادف وتبادل الآراء.">
+    <meta name="keywords" content="شات إيجي, مقالات, نشر حر, منصة تفاعلية, أخبار, مصر">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#2563eb">
+    
+    <!-- PWA Links -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/icons/icon-192.png">
+    
+    <link rel="stylesheet" href="/css/portal.css">
 </head>
 <body>
-  
-  <header class="site-header">
-    <div class="header-wrap">
-      <div class="header-main">
-        <a class="brand" href="/">
-          <img src="/icons/icon-192.png" alt="شات إيجي" width="44" height="44">
-          <span>شات إيجي</span>
-        </a>
-        <form class="top-search" action="/topics/" method="get">
-          <input type="search" name="q" placeholder="ابحث عن موضوع..." aria-label="ابحث في الموقع">
-          <button type="submit">بحث</button>
-        </form>
-      </div>
-      <nav class="top-nav">
-        <a href="/">الرئيسية</a>
-        <a href="/topics/">أحدث الموضوعات</a>
-        <a href="/features.html" style="background: linear-gradient(120deg, var(--brand-2), var(--brand)); color: #000;">الميزات التفاعلية ⚡</a>
-      </nav>
-    </div>
-  </header>
 
-  <main class="container">
-    <!-- قسم الترحيب السريع (Hero) -->
-    <section class="hero hero-home">
-      <div class="hero-copy">
-        <span class="eyebrow">مرحباً بك في شات إيجي</span>
-        <h1>الخلاصة الموثوقة.. في الوقت المناسب</h1>
-        <p>بوابتك الذكية لمتابعة أهم الأخبار والتريندات في مصر والعالم العربي، مع أدوات تفاعلية فريدة تجعل المتابعة أسرع وأكثر متعة.</p>
-        <div class="hero-kpis">
-          <span>🚀 أسرع تغطية</span>
-          <span>🔄 تحديث يومي</span>
-          <span>🎯 بدون إعلانات مزعجة</span>
+    <header class="site-header">
+        <div class="container header-flex">
+            <a href="/" class="logo">شات <span>إيجي</span></a>
+            <p class="tagline">صوتك مسموع بدون قيود</p>
         </div>
-      </div>
-      <div class="hero-panel">
-        <h2>اكتشف الميزات التفاعلية</h2>
-        <ul>
-          <li><strong>خبر في 20 ثانية:</strong> اقرأ الملخص المفيد بسرعة.</li>
-          <li><strong>خريطة المزاج:</strong> عبر عن رأيك وتابع انطباعات الآخرين.</li>
-          <li><strong>توقع الترند:</strong> شارك في تحدي الأحداث اليومية.</li>
-        </ul>
-        <a href="/features.html" class="read-more" style="display:inline-block; margin-top:10px;">جربها الآن الميزات كاملة</a>
-      </div>
-    </section>
+    </header>
 
-    <!-- قسم أحدث الموضوعات -->
-    <div class="section-head">
-      <h2>أحدث الموضوعات</h2>
-      <a href="/topics/">عرض الأرشيف الكامل</a>
-    </div>
+    <main class="container">
+        <section class="post-creation">
+            <form id="postForm">
+                <div class="input-group">
+                    <input type="text" id="authorName" placeholder="الاسم (إجباري)" required autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <textarea id="postContent" rows="4" placeholder="بم تفكر؟ شارك مقالك أو رأيك هنا..." required></textarea>
+                </div>
+                <button type="submit" class="btn-primary">نشر التدوينة</button>
+            </form>
+        </section>
 
-    <!-- شبكة المقالات التي سيتم جلبها عبر JavaScript -->
-    <div class="grid" id="latestTopicsGrid">
-      <div class="home-loader">جاري تحميل أحدث الأخبار...</div>
-    </div>
-  </main>
+        <section class="feed">
+            <div class="feed-header">
+                <h2>أحدث المنشورات</h2>
+            </div>
+            <div id="postsContainer">
+                <!-- سيتم حقن المنشورات هنا عبر الجافاسكريبت -->
+            </div>
+        </section>
+    </main>
 
-  <footer class="site-footer">
-    <div class="footer-wrap">
-      <section>
-        <h3>شات إيجي</h3>
-        <p>منصة عربية تجمع أحدث الموضوعات في عرض سريع ومنظم يساعد القارئ على المتابعة اليومية بسهولة.</p>
-      </section>
-      <section>
-        <h3>روابط سريعة</h3>
-        <div class="footer-links">
-          <a href="/about.html">من نحن</a>
-          <a href="/privacy.html">سياسة الخصوصية</a>
-          <a href="/terms.html">الشروط والأحكام</a>
-          <a href="/contact.html">اتصل بنا</a>
-        </div>
-      </section>
-      <section>
-        <h3>للتواصل</h3>
-        <p><a href="/contact.html">راسلنا عبر صفحة التواصل</a></p>
-        <p>© 2026 شات إيجي - جميع الحقوق محفوظة</p>
-      </section>
-    </div>
-  </footer>
-
-  <!-- سكربت جلب الأخبار وتفعيل PWA -->
-  <script>
-    // تفعيل Service Worker ليصبح الموقع PWA
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/sw.js').catch(function(err) {
-          console.warn('تعذر تسجيل Service Worker:', err);
-        });
-      });
-    }
-
-    // جلب أحدث 6 مواضيع من ملف JSON لعرضها في الصفحة الرئيسية
-    document.addEventListener("DOMContentLoaded", function() {
-      fetch('/data/topics.json')
-        .then(function(response) { return response.json(); })
-        .then(function(data) {
-          var grid = document.getElementById('latestTopicsGrid');
-          if (!data || data.length === 0) {
-            grid.innerHTML = '<p class="home-loader" style="color:var(--muted);">لا توجد موضوعات منشورة حتى الآن.</p>';
-            return;
-          }
-          
-          var latest = data.slice(0, 6);
-          grid.innerHTML = latest.map(function(topic) {
-            var title = topic.title.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-            var excerpt = (topic.excerpt || "").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-            var date = topic.published_at ? new Date(topic.published_at).toISOString().slice(0, 10) : "-";
-            
-            return '<article class="card">' +
-              '<div class="card-media" aria-hidden="true">' +
-                '<span class="card-media-kicker">' + topic.category + '</span>' +
-                '<span class="card-media-badge">تحديث متجدد</span>' +
-              '</div>' +
-              '<div class="card-body">' +
-                '<div class="card-top"><span class="chip">' + topic.category + '</span><time>' + date + '</time></div>' +
-                '<h2><a href="/topics/' + topic.slug + '/">' + title + '</a></h2>' +
-                '<p>' + excerpt + '</p>' +
-                '<div class="card-actions">' +
-                  '<span class="source-name">' + topic.source_name + '</span>' +
-                  '<a class="read-more" href="/topics/' + topic.slug + '/">اقرأ الآن</a>' +
-                '</div>' +
-              '</div>' +
-            '</article>';
-          }).join("");
-        })
-        .catch(function(err) { console.error("خطأ في جلب البيانات:", err); });
-    });
-  </script>
+    <script src="/js/app.js"></script>
 </body>
 </html>
