@@ -1,38 +1,27 @@
-const CACHE_NAME = "chat-egy-pwa-v1";
+const CACHE_NAME = 'chategy-v3';
 const ASSETS_TO_CACHE = [
-  "/",
-  "/index.html",
-  "/features.html",
-  "/manifest.json",
-  "/css/portal.css",
-  "/css/features.css",
-  "/images/chat-egy-logo.svg",
-  "/icons/icon-192.png",
-  "/icons/icon-512.png"
+  '/',
+  '/index.html',
+  '/css/portal.css',
+  '/js/app.js',
+  '/manifest.json'
 ];
 
-self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE);
-    }).then(() => self.skipWaiting())
-  );
+self.addEventListener('install', (event) => {
+  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS_TO_CACHE)));
+  self.skipWaiting();
 });
 
-self.addEventListener("activate", (event) => {
+self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => Promise.all(
-      cacheNames.map((cache) => {
-        if (cache !== CACHE_NAME) return caches.delete(cache);
-      })
+      cacheNames.map((cache) => cache !== CACHE_NAME ? caches.delete(cache) : null)
     )).then(() => self.clients.claim())
   );
 });
 
-self.addEventListener("fetch", (event) => {
-  if (event.request.method !== "GET") return;
+self.addEventListener('fetch', (event) => {
   event.respondWith(
-    caches.match(event.request)
-      .then((response) => response || fetch(event.request))
+    caches.match(event.request).then((response) => response || fetch(event.request))
   );
 });
