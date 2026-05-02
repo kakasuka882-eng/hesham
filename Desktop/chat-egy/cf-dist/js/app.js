@@ -68,5 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function escapeHTML(str) { return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag])); }
     
+    // تفعيل Service Worker لضمان تحديث الملفات وعدم تعليق الكاش القديم
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').catch(err => console.warn('SW Error:', err));
+    }
+
     renderPosts();
 });
