@@ -1,0 +1,43 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard.php
+Disallow: /dashboard/
+Disallow: /app-api.php
+Disallow: /api.php
+
+# AI crawler directives (standard robots format)
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: meta-externalagent
+Disallow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-News
+Allow: /
+
+User-agent: AdsBot-Google
+Allow: /
+
+Host: chat-egy.com
+Sitemap: https://chat-egy.com/sitemap.xml

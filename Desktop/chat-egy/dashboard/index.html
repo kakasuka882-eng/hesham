@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>لوحة تحكم شات إيجي</title>
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#071120">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #071120;
+      --panel: rgba(16, 30, 55, 0.96);
+      --panel-soft: rgba(12, 22, 42, 0.9);
+      --line: rgba(117, 172, 255, 0.18);
+      --text: #eef4ff;
+      --muted: #9eb2d3;
+      --accent: #34c3ff;
+      --accent-2: #6cf0c2;
+      --danger: #ff7f96;
+      --warn: #f8c04d;
+      --chip: rgba(52, 195, 255, 0.12);
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Cairo", sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(52, 195, 255, 0.14), transparent 30%),
+        radial-gradient(circle at bottom left, rgba(108, 240, 194, 0.12), transparent 28%),
+        var(--bg);
+      color: var(--text);
+    }
+    [hidden] { display: none !important; }
+    button, input, textarea, select { font: inherit; }
+    .page-shell {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .login-card {
+      width: min(460px, 100%);
+      padding: 28px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(23, 49, 90, 0.96), var(--panel));
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
+    .login-card h1 {
+      margin-bottom: 10px;
+    }
+    .login-card p {
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 18px;
+    }
+    .login-card .field + .field {
+      margin-top: 14px;
+    }
+    .shell {
+      max-width: 1450px;
+      margin: 0 auto;
+      padding: 26px 18px 38px;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(300px, 0.9fr);
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+    .panel {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(23, 49, 90, 0.96), var(--panel));
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
+    .hero-main {
+      padding: 28px;
+    }
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--chip);
+      color: #cde9ff;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    .hero-main h1 {
+      font-size: 42px;
+      line-height: 1.12;
+      margin-bottom: 12px;
+    }
+    .hero-main p {
+      color: var(--muted);
+      line-height: 1.9;
+      margin-bottom: 18px;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .btn {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 11px 16px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+    .btn:hover { border-color: rgba(117,172,255,.35); background: rgba(255,255,255,.08); }
+    .btn.primary { background: linear-gradient(135deg, rgba(52,195,255,.24), rgba(108,240,194,.22)); }
+    .btn.warn { border-color: rgba(248, 192, 77, 0.3); color: #ffe29b; }
+    .btn.danger { border-color: rgba(255, 127, 150, 0.3); color: #ffb6c1; }
+    .btn.secondary { background: rgba(255,255,255,0.06); }
+    .hero-side {
+      padding: 22px;
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+    .metric {
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(7, 17, 32, 0.45);
+      border: 1px solid var(--line);
+    }
+    .metric-label {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+    .metric-value {
+      font-size: 27px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    .metric small {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+    .section {
+      padding: 22px;
+    }
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .section-head p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .section-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+    .status-box {
+      border-radius: 16px;
+      padding: 14px 16px;
+      background: rgba(7, 17, 32, 0.52);
+      border: 1px solid var(--line);
+      margin-bottom: 16px;
+      color: var(--muted);
+      line-height: 1.8;
+      white-space: pre-line;
+    }
+    .status-box strong { color: var(--text); }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .form-grid.single {
+      grid-template-columns: 1fr;
+    }
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+    .field label {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .field input,
+    .field textarea,
+    .field select {
+      width: 100%;
+      border-radius: 16px;
+      border: 1px solid rgba(117, 172, 255, 0.16);
+      background: rgba(6, 14, 26, 0.8);
+      color: var(--text);
+      padding: 12px 14px;
+      outline: none;
+      transition: .2s ease;
+    }
+    .field textarea {
+      min-height: 124px;
+      resize: vertical;
+    }
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      border-color: rgba(52, 195, 255, 0.45);
+      box-shadow: 0 0 0 3px rgba(52, 195, 255, 0.08);
+    }
+    .form-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .article-layout {
+      display: grid;
+      grid-template-columns: minmax(320px, 0.78fr) minmax(0, 1.22fr);
+      gap: 18px;
+    }
+    .article-list-shell {
+      border: 1px solid var(--line);
+      background: rgba(7, 17, 32, 0.46);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+    .article-search {
+      padding: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    .article-list {
+      max-height: 840px;
+      overflow: auto;
+      padding: 8px;
+      display: grid;
+      gap: 8px;
+    }
+    .article-item {
+      width: 100%;
+      text-align: right;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid transparent;
+      background: rgba(255,255,255,0.02);
+      color: var(--text);
+      cursor: pointer;
+    }
+    .article-item:hover,
+    .article-item.active {
+      border-color: rgba(52, 195, 255, 0.34);
+      background: rgba(52, 195, 255, 0.08);
+    }
+    .article-item strong {
+      display: block;
+      line-height: 1.7;
+      margin-bottom: 8px;
+    }
+    .article-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--chip);
+      color: #d8eeff;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .editor-empty {
+      padding: 48px 18px;
+      text-align: center;
+      color: var(--muted);
+      border: 1px dashed var(--line);
+      border-radius: 18px;
+      background: rgba(7, 17, 32, 0.4);
+    }
+    .hint-list {
+      margin: 0;
+      padding-right: 18px;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+    .footer-note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+    .muted { color: var(--muted); }
+    .success { color: #86f1c9; }
+    .danger-text { color: #ffb6c1; }
+    @media (max-width: 1120px) {
+      .hero,
+      .grid,
+      .article-layout,
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell" id="adminLoginView">
+    <section class="login-card">
+      <h1>دخول الأدمن</h1>
+      <p>هذه النسخة تعمل من الخادم مباشرة. سجّل الدخول بحساب الأدمن لتعديل المقالات وتشغيل البناء والنشر.</p>
+      <form id="adminLoginForm">
+        <div class="field">
+          <label for="adminUsername">اسم المستخدم</label>
+          <input id="adminUsername" name="username" type="text" placeholder="admin" autocomplete="username" required>
+        </div>
+        <div class="field">
+          <label for="adminPassword">كلمة المرور</label>
+          <input id="adminPassword" name="password" type="password" placeholder="••••••••" autocomplete="current-password" required>
+        </div>
+        <div class="form-actions">
+          <button class="btn primary" type="submit">تسجيل الدخول</button>
+        </div>
+      </form>
+      <div class="status-box" id="loginStatusBox" style="margin-top:16px; margin-bottom:0;">
+        <strong>بانتظار الدخول.</strong> استخدم حساب الأدمن لفتح لوحة التحكم.
+      </div>
+    </section>
+  </div>
+
+  <div class="shell" id="adminApp" hidden>
+    <section class="hero">
+      <div class="panel hero-main">
+        <span class="hero-kicker">لوحة تحكم فعلية متصلة بالخادم</span>
+        <h1>إدارة شات إيجي من نفس الداشبورد</h1>
+        <p>
+          هذه اللوحة تعمل عبر <strong>API الأدمن</strong> مباشرة. يمكنك تعديل إعدادات المصدر، إنشاء المقالات وتحديثها وحذفها،
+          ثم تشغيل البناء أو النشر من نفس الواجهة بدون ربط مجلد محلي من المتصفح.
+        </p>
+        <div class="hero-actions">
+          <button class="btn secondary" id="reloadProjectBtn" type="button">إعادة تحميل البيانات</button>
+          <button class="btn primary" id="buildProjectBtn" type="button">تشغيل البناء</button>
+          <button class="btn warn" id="deployProjectBtn" type="button">نشر إلى Cloudflare</button>
+          <button class="btn secondary" id="copyDeployCommandBtn" type="button">نسخ أوامر النشر</button>
+          <button class="btn danger" id="logoutBtn" type="button">تسجيل خروج</button>
+        </div>
+      </div>
+      <div class="panel hero-side">
+        <div class="metric">
+          <span class="metric-label">حالة الأدمن</span>
+          <strong class="metric-value" id="connectionMetric">غير مسجل</strong>
+          <small id="projectPathHint">سيظهر مسار المشروع بعد التحقق من الجلسة</small>
+        </div>
+        <div class="metric">
+          <span class="metric-label">إجمالي المقالات</span>
+          <strong class="metric-value" id="topicsCountMetric">0</strong>
+          <small id="lastTopicMetric">لا توجد بيانات محملة</small>
+        </div>
+        <div class="metric">
+          <span class="metric-label">آخر بناء RSS</span>
+          <strong class="metric-value" id="feedMetric">-</strong>
+          <small id="sitemapMetric">عدد روابط الخريطة: 0</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel section">
+      <div class="section-head">
+        <div>
+          <h2>حالة التنفيذ</h2>
+          <p>أي عملية حفظ ستعرض نتيجتها هنا.</p>
+        </div>
+      </div>
+      <div class="status-box" id="statusBox">
+        <strong>بانتظار البدء.</strong> سجّل الدخول أولًا، ثم افتح المقال أو الإعدادات التي تريد تعديلها.
+      </div>
+      <ul class="hint-list">
+        <li>كل العمليات هنا تمر عبر جلسة الأدمن في `app-api.php` ولا تعتمد على ربط مجلد محلي من المتصفح.</li>
+        <li>تعديلات <strong>إعدادات المصدر</strong> تحفظ في `tools/generate-portal.mjs` وتحتاج بعدها إلى إعادة بناء ثم نشر.</li>
+        <li>تعديلات <strong>المقالات</strong> تحفظ في `topics.json` وملفات المقالات والقوائم و`feed.xml` و`sitemap.xml` داخل المشروع.</li>
+      </ul>
+    </section>
+
+    <section class="grid">
+      <div class="panel section">
+        <div class="section-head">
+          <div>
+            <h2>إعدادات المصدر</h2>
+            <p>هذه الحقول تعدّل ثوابت المولد مباشرة داخل `generate-portal.mjs`.</p>
+          </div>
+          <span class="pill">تحتاج إعادة بناء</span>
+        </div>
+        <form id="settingsForm">
+          <div class="form-grid">
+            <div class="field">
+              <label for="siteUrl">رابط الموقع</label>
+              <input id="siteUrl" name="siteUrl" type="url" placeholder="https://chat-egy.com">
+            </div>
+            <div class="field">
+              <label for="siteBrand">اسم العلامة</label>
+              <input id="siteBrand" name="siteBrand" type="text" placeholder="شات إيجي">
+            </div>
+            <div class="field">
+              <label for="siteName">اسم الموقع الكامل</label>
+              <input id="siteName" name="siteName" type="text" placeholder="شات إيجي - شات مصر - إيجي شات">
+            </div>
+            <div class="field">
+              <label for="contactEmail">بريد التواصل</label>
+              <input id="contactEmail" name="contactEmail" type="email" placeholder="name@example.com">
+            </div>
+            <div class="field">
+              <label for="adsenseClient">معرف Adsense</label>
+              <input id="adsenseClient" name="adsenseClient" type="text" placeholder="ca-pub-xxxxxxxxxxxxxxxx">
+            </div>
+            <div class="field">
+              <label for="homeTitleSuffix">ذيل عنوان الصفحة الرئيسية</label>
+              <input id="homeTitleSuffix" name="homeTitleSuffix" type="text" placeholder="موضوعات عربية محدثة">
+            </div>
+          </div>
+          <div class="form-grid single" style="margin-top:14px;">
+            <div class="field">
+              <label for="siteKeywords">الكلمات المفتاحية</label>
+              <textarea id="siteKeywords" name="siteKeywords" placeholder="شات ايجي, شات مصر, ايجي شات"></textarea>
+            </div>
+            <div class="field">
+              <label for="homeDescription">وصف الصفحة الرئيسية</label>
+              <textarea id="homeDescription" name="homeDescription" placeholder="وصف الصفحة الرئيسية للموقع"></textarea>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="btn primary" id="saveSettingsBtn" type="submit">حفظ إعدادات المصدر</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="panel section">
+        <div class="section-head">
+          <div>
+            <h2>أوامر المشروع</h2>
+            <p>لو احتجت تشغيل البناء والنشر من التيرمنال بعد حفظ إعدادات المصدر.</p>
+          </div>
+          <span class="pill">مرجع سريع</span>
+        </div>
+        <div class="status-box" style="margin-bottom:12px;">
+          <strong>إعادة بناء ملفات النشر:</strong><br>
+          <code>node tools/prepare-cloudflare-dist.mjs</code>
+        </div>
+        <div class="status-box" style="margin-bottom:12px;">
+          <strong>نشر النسخة الجديدة على Cloudflare:</strong><br>
+          <code>npx wrangler pages deploy cf-dist --project-name chat-egy --branch main</code>
+        </div>
+        <div class="status-box">
+          <strong>متى أحتاج تشغيلهما؟</strong><br>
+          بعد تعديل إعدادات المصدر، أو بعد أي تعديل تريد رؤيته على النسخة المنشورة في Cloudflare.
+        </div>
+        <p class="footer-note">
+          يمكنك تعديل المقالات من هذه اللوحة ثم نشر المشروع كالمعتاد. ولو أردت لاحقًا، يمكن توسيع الداشبورد ليضيف
+          إنشاء مقال جديد أو إدارة صفحات الموقع الثابتة.
+        </p>
+      </div>
+    </section>
+
+    <section class="panel section">
+      <div class="section-head">
+        <div>
+          <h2>إدارة المقالات</h2>
+          <p>هذا القسم يكتب فعليًا في ملفات المشروع: `topics.json` والصفحات والقوائم و`feed.xml` و`sitemap.xml`.</p>
+        </div>
+        <div class="section-actions">
+          <button class="btn primary" id="createArticleBtn" type="button">إنشاء مقال جديد</button>
+          <span class="pill">تعديل مباشر</span>
+        </div>
+      </div>
+      <div class="article-layout">
+        <div class="article-list-shell">
+          <div class="article-search">
+            <div class="field">
+              <label for="articleSearchInput">ابحث عن مقال</label>
+              <input id="articleSearchInput" type="search" placeholder="اكتب جزءًا من العنوان أو التصنيف أو السلاج">
+            </div>
+          </div>
+          <div class="article-list" id="articleList">
+            <div class="editor-empty">بعد ربط المجلد ستظهر هنا المقالات الأخيرة.</div>
+          </div>
+        </div>
+
+        <div>
+          <form class="panel section" id="articleForm">
+            <div class="section-head">
+              <div>
+                <h3>بيانات المقال</h3>
+                <p>اختر مقالًا من القائمة ثم عدّل الحقول التي تريدها.</p>
+              </div>
+              <span class="pill" id="selectedSlugPill">لا يوجد اختيار</span>
+            </div>
+            <div id="articleEditorBody">
+              <div class="editor-empty">
+                اختر مقالًا من القائمة اليسرى لعرض بياناته وتعديلها.
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <template id="articleEditorTemplate">
+    <div class="form-grid">
+      <div class="field">
+        <label for="articleSlug">السلاج</label>
+        <input id="articleSlug" name="slug" type="text" readonly>
+      </div>
+      <div class="field">
+        <label for="articlePublishedAt">تاريخ النشر</label>
+        <input id="articlePublishedAt" name="publishedAt" type="datetime-local">
+      </div>
+    </div>
+    <div class="form-grid single" style="margin-top:14px;">
+      <div class="field">
+        <label for="articleTitle">العنوان</label>
+        <textarea id="articleTitle" name="title"></textarea>
+      </div>
+      <div class="field">
+        <label for="articleExcerpt">الملخص</label>
+        <textarea id="articleExcerpt" name="excerpt"></textarea>
+      </div>
+    </div>
+    <div class="form-grid" style="margin-top:14px;">
+      <div class="field">
+        <label for="articleCategory">التصنيف</label>
+        <input id="articleCategory" name="category" type="text">
+      </div>
+      <div class="field">
+        <label for="articleSourceName">اسم المصدر</label>
+        <input id="articleSourceName" name="sourceName" type="text">
+      </div>
+      <div class="field">
+        <label for="articleSourceUrl">رابط المصدر</label>
+        <input id="articleSourceUrl" name="sourceUrl" type="url">
+      </div>
+      <div class="field">
+        <label for="articleSourceLink">رابط الخبر الأصلي</label>
+        <input id="articleSourceLink" name="sourceLink" type="url">
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn primary" id="saveArticleBtn" type="submit">حفظ المقال</button>
+      <button class="btn danger" id="deleteArticleBtn" type="button">حذف المقال</button>
+    </div>
+  </template>
+
+  <script src="/js/dashboard-admin.js?v=20260313-03"></script>
+</body>
+</html>

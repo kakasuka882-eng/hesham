@@ -1,0 +1,47 @@
+name: Hourly Topics Auto Publish
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch:
+
+jobs:
+  generate-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Generate 2 Topics Every Hour
+        run: node tools/generate-portal.mjs --mode=daily --daily-count=2 --max-posts=1200
+
+      - name: Commit Generated Updates
+        run: |
+          git config user.name "chat-egy-bot"
+          git config user.email "actions@github.com"
+          git add .
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: auto-generate hourly topics"
+            git push
+          fi
+
+      - name: Build Cloudflare Dist
+        run: node tools/prepare-cloudflare-dist.mjs
+
+      - name: Deploy to Cloudflare Pages
+        run: npx wrangler pages deploy cf-dist --project-name "${{ secrets.CLOUDFLARE_PAGES_PROJECT }}" --branch main
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

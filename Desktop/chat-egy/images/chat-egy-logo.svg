@@ -1,0 +1,19 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t d">
+<title id="t">Chat EGY Logo</title>
+<desc id="d">Premium monogram logo for Chat EGY.</desc>
+<defs>
+  <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#e2c17e"/>
+    <stop offset="100%" stop-color="#a87b30"/>
+  </linearGradient>
+  <linearGradient id="sea" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#1f7462"/>
+    <stop offset="100%" stop-color="#0d4e40"/>
+  </linearGradient>
+</defs>
+<rect width="512" height="512" rx="110" fill="#f8f1e3"/>
+<rect x="30" y="30" width="452" height="452" rx="90" fill="none" stroke="url(#gold)" stroke-width="8"/>
+<path d="M130 158h252v44H184v52h176v43H184v54h198v43H130V158z" fill="url(#sea)"/>
+<circle cx="366" cy="148" r="28" fill="url(#gold)"/>
+<text x="256" y="443" text-anchor="middle" fill="#0f4f42" font-size="56" font-family="Cairo,Segoe UI,Tahoma,sans-serif" font-weight="800">CHAT EGY</text>
+</svg>
