@@ -1,52 +1,68 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شات إيجي - منصة النشر التفاعلية المفتوحة</title>
-    <meta name="description" content="شارك أفكارك ومقالاتك بحرية على شات إيجي بدون تعقيدات التسجيل. مجتمع مفتوح للنقاش الهادف وتبادل الآراء.">
-    <meta name="keywords" content="شات إيجي, مقالات, نشر حر, منصة تفاعلية, أخبار, مصر">
-    <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#2563eb">
-    
-    <!-- PWA Links -->
-    <link rel="manifest" href="/manifest.json">
-    <link rel="apple-touch-icon" href="/icons/icon-192.png">
-    
-    <link rel="stylesheet" href="/css/portal.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شات إيجي - مجتمعك التفاعلي</title>
+  <meta name="theme-color" content="#15202b">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <link rel="stylesheet" href="/css/portal.css">
 </head>
 <body>
 
-    <header class="site-header">
-        <div class="container header-flex">
-            <a href="/" class="logo">شات <span>إيجي</span></a>
-            <p class="tagline">صوتك مسموع بدون قيود</p>
-        </div>
-    </header>
+  <header class="app-header">
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <img src="/icons/icon-192.png" width="36" height="36" alt="شات إيجي">
+        شات إيجي
+      </a>
+      <div class="search-bar">
+        <input type="text" placeholder="ابحث في شات إيجي...">
+      </div>
+      <button class="btn-primary">تسجيل الدخول</button>
+    </div>
+  </header>
 
-    <main class="container">
-        <section class="post-creation">
-            <form id="postForm">
-                <div class="input-group">
-                    <input type="text" id="authorName" placeholder="الاسم (إجباري)" required autocomplete="off">
-                </div>
-                <div class="input-group">
-                    <textarea id="postContent" rows="4" placeholder="بم تفكر؟ شارك مقالك أو رأيك هنا..." required></textarea>
-                </div>
-                <button type="submit" class="btn-primary">نشر التدوينة</button>
-            </form>
-        </section>
+  <div class="app-layout">
+    <!-- الشريط الجانبي الأيمن -->
+    <aside class="sidebar">
+      <nav class="nav-links">
+        <a href="/" class="active">🏠 الرئيسية</a>
+        <a href="/topics/">🔥 استكشف</a>
+        <a href="#">🔔 الإشعارات</a>
+        <a href="#">✉️ الرسائل</a>
+        <a href="#">👤 الملف الشخصي</a>
+      </nav>
+    </aside>
 
-        <section class="feed">
-            <div class="feed-header">
-                <h2>أحدث المنشورات</h2>
-            </div>
-            <div id="postsContainer">
-                <!-- سيتم حقن المنشورات هنا عبر الجافاسكريبت -->
-            </div>
-        </section>
+    <!-- الخلاصة (Feed) -->
+    <main class="feed-section">
+      <div class="create-post">
+        <div class="avatar">أنت</div>
+        <form id="postForm" style="display:flex; width:100%; gap:10px;">
+          <input type="text" id="postContent" placeholder="ماذا يحدث؟ شاركنا أفكارك..." required autocomplete="off">
+          <button type="submit" class="btn-primary">نشر</button>
+        </form>
+      </div>
+      <div id="postsContainer">
+        <!-- المنشورات تظهر هنا -->
+      </div>
     </main>
 
-    <script src="/js/app.js"></script>
+    <!-- الشريط الجانبي الأيسر (التريند) -->
+    <aside class="widgets">
+      <div class="widget">
+        <h3>المتداول الآن</h3>
+        <ul class="trending-list">
+          <li><span>1 • سياسة</span><br>#الاقتصاد_المصري</li>
+          <li><span>2 • رياضة</span><br>#الدوري_الممتاز</li>
+          <li><span>3 • تكنولوجيا</span><br>#الذكاء_الاصطناعي</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+
+  <script src="/js/app.js"></script>
 </body>
 </html>
